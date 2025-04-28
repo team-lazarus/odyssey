@@ -11,9 +11,9 @@ class OdysseyEnvironment(Environment):
         # Initialize the base Theseus environment
         super().__init__()
         
-        # Initialize clients for both Theseus and Daedalus
-        self.theseus_client = None
-        self.daedalus_client = None
+        # # Initialize clients for both Theseus and Daedalus
+        # self.theseus_client = None
+        # self.daedalus_client = None
         
         # Track additional state for Odyssey
         self.current_game_matrix = None
@@ -116,13 +116,21 @@ class OdysseyEnvironment(Environment):
         }
     
     def update_daedalus(self, episode_summary: Dict[str, Any]):
+        """
+        Passes the episode summary to the Daedalus agent.
+        This enables Daedalus to learn from the outcome of the episode.
+        """
         try:
-            #figure out, talk to others abt it
-            self.logger.info(f"Updating Daedalus with episode summary: {episode_summary}")
-            pass
+            # If the environment has a reference to the Daedalus agent, update it
+            if hasattr(self, 'daedalus_agent') and hasattr(self.daedalus_agent, 'update_episode'):
+                self.daedalus_agent.update_episode(episode_summary)
+                self.logger.info("Called daedalus_agent.update_episode with episode summary.")
+            else:
+                # Otherwise, just log the summary (as before)
+                self.logger.info(f"Episode summary for Daedalus: {episode_summary}")
         except Exception as e:
-            self.logger.warning(f"Warning: Failed to update Daedalus model: {e}")
-            print(f"Warning: Failed to update Daedalus model: {e}")
+            self.logger.warning(f"Warning: Failed to update Daedalus agent: {e}")
+            print(f"Warning: Failed to update Daedalus agent: {e}")
     
     def reset_for_next_wave(self, map_data: List[List]) -> State:
         # Reset wave_clear flag
