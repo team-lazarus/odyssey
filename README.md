@@ -8,3 +8,10 @@
 ## Report:
 
 - [Read the full report (PDF)](TeamLazarusFinalReport.pdf)
+
+## Our repositories:
+
+- https://github.com/team-lazarus/labyrinth
+- https://github.com/team-lazarus/theseus
+- https://github.com/team-lazarus/daedalus
+- https://github.com/team-lazarus/odyssey
